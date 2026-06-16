@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Agristack Farmer Card Generator</title>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<style>
+
+body{
+font-family:Arial,sans-serif;
+background:#f4f4f4;
+padding:20px;
+}
+
+.container{
+max-width:1200px;
+margin:auto;
+}
+
+input,textarea,select{
+width:100%;
+padding:10px;
+margin:5px 0;
+border:1px solid #ccc;
+border-radius:5px;
+}
+
+button{
+padding:12px 20px;
+background:#0a6b2d;
+color:white;
+border:none;
+border-radius:5px;
+cursor:pointer;
+margin-top:10px;
+}
+
+.card{
+width:900px;
+margin:auto;
+background:white;
+border:2px solid green;
+margin-top:20px;
+}
+
+.header{
+background:#006400;
+color:white;
+padding:12px;
+font-size:24px;
+font-weight:bold;
+display:flex;
+justify-content:space-between;
+}
+
+.front-body{
+display:flex;
+padding:20px;
+}
+
+.photo{
+width:180px;
+height:220px;
+border:1px solid #000;
+object-fit:cover;
+}
+
+.info{
+padding-left:20px;
+flex:1;
+}
+
+.highlight{
+border:2px solid green;
+padding:10px;
+margin-top:10px;
+font-weight:bold;
+}
+
+.footer{
+background:#006400;
+color:white;
+padding:10px;
+display:flex;
+justify-content:space-between;
+}
+
+.back{
+padding:20px;
+}
+
+.back h2{
+background:#006400;
+color:white;
+padding:10px;
+margin:-20px -20px 20px -20px;
+}
+
+.qr{
+width:120px;
+height:120px;
+border:1px solid #000;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<h2>Farmer Card Generator</h2>
+
+<input id="fname" placeholder="Farmer Name">
+<input id="father" placeholder="Father Name">
+<input id="dob" type="date">
+
+<select id="gender">
+<option>Male</option>
+<option>Female</option>
+</select>
+
+<input id="caste" placeholder="Caste">
+<input id="mobile" placeholder="Mobile">
+<input id="category" placeholder="Category">
+
+<input id="enrollment" placeholder="Enrollment Number">
+<input id="farmerid" placeholder="Farmer ID">
+
+<textarea id="address" placeholder="Address"></textarea>
+
+<input id="district" placeholder="District">
+<input id="tehsil" placeholder="Tehsil">
+<input id="village" placeholder="Village">
+<input id="gata" placeholder="Gata Number">
+
+<input type="file" id="photo">
+
+<button onclick="generateCard()">Generate Preview</button>
+<button onclick="downloadPDF()">Download PDF</button>
+
+<!-- FRONT CARD -->
+
+<div id="card">
+
+<div class="card">
+
+<div class="header">
+<div>उत्तर प्रदेश सरकार</div>
+<div>AGRISTACK</div>
+</div>
+
+<div class="front-body">
+
+<img id="previewPhoto" class="photo">
+
+<div class="info">
+
+<h2 id="showName"></h2>
+
+<p id="showFather"></p>
+
+<p id="showDob"></p>
+
+<p id="showGender"></p>
+
+<div class="highlight">
+<p id="showEnrollment"></p>
+<p id="showFarmerId"></p>
+</div>
+
+</div>
+
+</div>
+
+<div class="footer">
+<div id="showMobile"></div>
+<div id="showCategory"></div>
+</div>
+
+</div>
+
+<!-- BACK CARD -->
+
+<div class="card">
+
+<div class="back">
+
+<h2>भूमि एवं आवासीय विवरण</h2>
+
+<p id="showAddress"></p>
+
+<p id="showLand"></p>
+
+<p id="showGata"></p>
+
+<div style="display:flex;justify-content:space-between;margin-top:20px;">
+
+<div class="qr">
+QR CODE
+</div>
+
+<div style="width:60%;">
+यह कार्ड एग्रीस्टैक डिजिटल पब्लिक इन्फ्रास्ट्रक्चर के तहत प्रमाणित है।
+</div>
+
+</div>
+
+</div>
+
+<div class="footer">
+<div>जारी तिथि: 13/02/2025</div>
+<div>DBT Eligible</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+function generateCard(){
+
+showName.innerHTML =
+"किसान का नाम : " + fname.value;
+
+showFather.innerHTML =
+"पिता का नाम : " + father.value;
+
+showDob.innerHTML =
+"जन्म तिथि : " + dob.value;
+
+showGender.innerHTML =
+"लिंग / जाति : " +
+gender.value + " / " +
+caste.value;
+
+showEnrollment.innerHTML =
+"Enrollment No : " +
+enrollment.value;
+
+showFarmerId.innerHTML =
+"Farmer ID : " +
+farmerid.value;
+
+showMobile.innerHTML =
+"मोबाइल : " +
+mobile.value;
+
+showCategory.innerHTML =
+"श्रेणी : " +
+category.value;
+
+showAddress.innerHTML =
+"पता : " +
+address.value;
+
+showLand.innerHTML =
+"जिला : " +
+district.value +
+" | तहसील : " +
+tehsil.value +
+" | गांव : " +
+village.value;
+
+showGata.innerHTML =
+"गाटा संख्या : " +
+gata.value;
+
+let file =
+document.getElementById("photo").files[0];
+
+if(file){
+
+let reader =
+new FileReader();
+
+reader.onload = function(e){
+
+document.getElementById(
+"previewPhoto"
+).src = e.target.result;
+
+}
+
+reader.readAsDataURL(file);
+
+}
+
+}
+
+async function downloadPDF(){
+
+const card =
+document.getElementById("card");
+
+const canvas =
+await html2canvas(card,{
+scale:2
+});
+
+const img =
+canvas.toDataURL("image/png");
+
+const { jsPDF } =
+window.jspdf;
+
+const pdf =
+new jsPDF("p","mm","a4");
+
+pdf.addImage(
+img,
+"PNG",
+5,
+5,
+200,
+280
+);
+
+pdf.save(
+"Farmer_Card.pdf"
+);
+
+}
+
+</script>
+
+</body>
+</html>
