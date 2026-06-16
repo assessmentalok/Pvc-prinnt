@@ -6,108 +6,138 @@
 
 <title>Agristack Farmer Card Generator</title>
 
+<link rel="stylesheet" href="style.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
-<style>
+</head>
+<body>
 
-body{
-font-family:Arial,sans-serif;
-background:#f4f4f4;
-padding:20px;
-}
+<div class="container">
 
-.container{
-max-width:1200px;
-margin:auto;
-}
+<h2>Farmer Card Generator</h2>
 
-input,textarea,select{
-width:100%;
-padding:10px;
-margin:5px 0;
-border:1px solid #ccc;
-border-radius:5px;
-}
+<input id="fname" placeholder="Farmer Name">
+<input id="father" placeholder="Father Name">
+<input id="dob" type="date">
 
-button{
-padding:12px 20px;
-background:#0a6b2d;
-color:white;
-border:none;
-border-radius:5px;
-cursor:pointer;
-margin-top:10px;
-}
+<select id="gender">
+<option>Male</option>
+<option>Female</option>
+</select>
 
-.card{
-width:900px;
-margin:auto;
-background:white;
-border:2px solid green;
-margin-top:20px;
-}
+<input id="caste" placeholder="Caste">
+<input id="mobile" placeholder="Mobile">
+<input id="category" placeholder="Category">
 
-.header{
-background:#006400;
-color:white;
-padding:12px;
-font-size:24px;
-font-weight:bold;
-display:flex;
-justify-content:space-between;
-}
+<input id="enrollment" placeholder="Enrollment No">
+<input id="farmerid" placeholder="Farmer ID">
 
-.front-body{
-display:flex;
-padding:20px;
-}
+<textarea id="address" placeholder="Address"></textarea>
 
-.photo{
-width:180px;
-height:220px;
-border:1px solid #000;
-object-fit:cover;
-}
+<input id="district" placeholder="District">
+<input id="tehsil" placeholder="Tehsil">
+<input id="village" placeholder="Village">
+<input id="gata" placeholder="Gata Number">
 
-.info{
-padding-left:20px;
-flex:1;
-}
+<input type="file" id="photo">
 
-.highlight{
-border:2px solid green;
-padding:10px;
-margin-top:10px;
-font-weight:bold;
-}
+<button onclick="generateCard()">Generate Card</button>
+<button onclick="downloadPDF()">Download PDF</button>
 
-.footer{
-background:#006400;
-color:white;
-padding:10px;
-display:flex;
-justify-content:space-between;
-}
+<div id="card">
 
-.back{
-padding:20px;
-}
+<!-- FRONT -->
 
-.back h2{
-background:#006400;
-color:white;
-padding:10px;
-margin:-20px -20px 20px -20px;
-}
+<div class="card">
 
-.qr{
-width:120px;
-height:120px;
-border:1px solid #000;
-display:flex;
-justify-content:center;
-align-items:center;
+<div class="header">
+
+<div class="logoBox">
+<img src="up-logo.png">
+<div>
+उत्तर प्रदेश सरकार<br>
+Govt. of UP
+</div>
+</div>
+
+<div class="logoBox">
+<img src="agristack-logo.png">
+</div>
+
+</div>
+
+<div class="frontBody">
+
+<img id="previewPhoto" class="photo">
+
+<div class="info">
+
+<h3 id="showName"></h3>
+<p id="showFather"></p>
+<p id="showDob"></p>
+<p id="showGender"></p>
+
+<div class="highlight">
+<p id="showEnrollment"></p>
+<p id="showFarmerId"></p>
+</div>
+
+</div>
+
+</div>
+
+<div class="footer">
+<span id="showMobile"></span>
+<span id="showCategory"></span>
+</div>
+
+</div>
+
+<!-- BACK -->
+
+<div class="card">
+
+<div class="backHeader">
+भूमि एवं आवासीय विवरण
+</div>
+
+<div class="backBody">
+
+<p id="showAddress"></p>
+
+<p id="showLand"></p>
+
+<p id="showGata"></p>
+
+<div class="bottomRow">
+
+<div id="qrcode"></div>
+
+<div class="note">
+यह कार्ड एग्रीस्टैक डिजिटल पब्लिक इन्फ्रास्ट्रक्चर के तहत प्रमाणित है।
+</div>
+
+</div>
+
+</div>
+
+<div class="footer">
+जारी तिथि: 13/02/2025 | DBT Eligible
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>align-items:center;
 }
 
 </style>
